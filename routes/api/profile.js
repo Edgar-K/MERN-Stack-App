@@ -70,12 +70,44 @@ router.post(
         if (bio) profileFields.bio = bio;
         if (status) profileFields.status = status;
         if (githubusername) profileFields.githubusername = githubusername;
-        if(skills){
+        if (skills) {
             profileFields.skills = skills.split(',').map(skill => skill.trim());
         }
-        
-        console.log(profileFields.skills);
-        res.send('hallo');
+
+        //Build social object
+
+        profileFields.social = {};
+        if (youtube) profileFields.youtube = youtube;
+        if (twitter) profileFields.twitter = twitter;
+        if (facebook) profileFields.facebook = facebook;
+        if (linkedin) profileFields.linkedin = linkedin;
+        if (instagram) profileFields.instagram = instagram;
+
+        try {
+            let profile = await Profile.findOne({ user: req.user.id });
+
+            if (profile) {
+                // Update
+                profile = await Profile.findOneAndUpdate(
+                    { user: req.user.id },
+                    { $set: profileFields },
+                    { new: true }
+                );
+
+                return res.json(profile);
+            }
+
+
+
+            //Create
+            profile = new Profile(profileFields);
+
+            await profile.save();
+            res.json(profile);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
     }
 );
 
