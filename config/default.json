@@ -1,4 +1,6 @@
 {
   "mongoURI": "mongodb+srv://edgar2020:edgar2020@devconnector.razel.mongodb.net/<dbname>?retryWrites=true&w=majority",
-  "jwtSecret": "mysecrettoken"
+  "jwtSecret": "mysecrettoken",
+  "githubClientId": "a92b6ea9f44bd9588968",
+  "githubSecret": "5a6ab6230b7daaab30fe8c1a1ae1b6acae70c7f0"
 }
